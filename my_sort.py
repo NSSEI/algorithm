@@ -33,7 +33,32 @@ def partition(nums_list, first, last):
     nums_list[first], nums_list[right] = nums_list[right], nums_list[first]
     return right
 
+def heap_sort(nums):
+    n = len(nums)
+    for i in reversed(range(n//2)):
+        heapify(nums, i, n)
+    for i in reversed(range(n)):
+        nums[0], nums[i] = nums[i], nums[0]
+        heapify(nums, 0, i)
+    return nums
+
+def heapify(nums, index, heap_size):
+    change = index
+    n = heap_size
+    leftchild = (index << 1) + 1
+    rightchild = leftchild + 1
+    if leftchild < n and nums[change] < nums[leftchild]:
+        change = leftchild
+    if rightchild < n and nums[change] < nums[rightchild]:
+        change = rightchild
+    if change != index:
+        nums[change], nums[index] = nums[index], nums[change]
+        heapify(nums, change, n)
+
+
+
 
 if __name__ == "__main__":
     print(insertion_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8]))
     print(quick_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8], 0, 10))
+    print(heap_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8]))
