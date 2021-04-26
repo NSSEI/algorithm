@@ -33,6 +33,7 @@ def partition(nums_list, first, last):
     nums_list[first], nums_list[right] = nums_list[right], nums_list[first]
     return right
 
+
 def heap_sort(nums):
     n = len(nums)
     for i in reversed(range(n//2)):
@@ -56,9 +57,43 @@ def heapify(nums, index, heap_size):
         heapify(nums, change, n)
 
 
+def merge_sort(nums, left, right):
+    if left < right:
+        mid = (left + right) // 2
+        merge_sort(nums, left, mid)
+        merge_sort(nums, mid + 1, right)
+        merge(nums, left, mid, right)
+    return nums
+
+def merge(nums, left, mid, right):
+    left_array = nums[left:mid + 1]
+    right_array = nums[mid + 1:right+1]
+    i = j = 0
+    k = left
+
+    while i < len(left_array) and j < len(right_array):
+        if left_array[i] < right_array[j]:
+            nums[k] = left_array[i]
+            i += 1
+            k += 1
+        else:
+            nums[k] = right_array[j]
+            j += 1
+            k += 1
+
+    while i < len(left_array):
+        nums[k] = left_array[i]
+        k += 1
+        i += 1
+    while j < len(right_array):
+        nums[k] = right_array[j]
+        k += 1
+        j += 1
+
 
 
 if __name__ == "__main__":
     print(insertion_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8]))
     print(quick_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8], 0, 10))
     print(heap_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8]))
+    print(merge_sort([9, 9, 10, 11, 5, 4, 3, 2, 1, 7, 8], 0, 10))
